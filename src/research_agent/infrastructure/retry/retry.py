@@ -29,7 +29,7 @@ class RetryError(Exception):
         self.last_exception = last_exception
 
 
-def call_with_retry(
+def call_with_retry(  # noqa: UP047
     func: Callable[[], T],
     policy: RetryPolicy,
     *,
@@ -66,7 +66,7 @@ def call_with_retry(
     raise RetryError(msg, attempts=policy.max_attempts, last_exception=last_exception)
 
 
-async def call_with_retry_async(
+async def call_with_retry_async(  # noqa: UP047
     func: Callable[[], Awaitable[T]],
     policy: RetryPolicy,
     *,

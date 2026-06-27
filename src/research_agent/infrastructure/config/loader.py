@@ -40,5 +40,5 @@ def load_settings(*, env_file: str | Path | None = None) -> Settings:
     """
     resolved = resolve_env_file(env_file)
     if resolved is None:
-        return Settings(_env_file=None)
-    return Settings(_env_file=resolved)
+        return Settings.model_validate({})
+    return Settings(_env_file=resolved)  # type: ignore[call-arg]

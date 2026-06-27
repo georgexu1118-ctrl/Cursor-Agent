@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Generic, TypeVar
+from typing import Generic, TypeVar, cast
 
 T = TypeVar("T")
 
@@ -76,13 +76,13 @@ class Container:
         if registration.singleton:
             cached = self._singletons.get(service_type)
             if cached is not None:
-                return cached  # type: ignore[no-any-return]
+                return cast(T, cached)
 
             instance = registration.factory()
             self._singletons[service_type] = instance
-            return instance
+            return cast(T, instance)
 
-        return registration.factory()
+        return cast(T, registration.factory())
 
     def is_registered(self, service_type: type[object]) -> bool:
         """Return whether the given service type is registered."""
