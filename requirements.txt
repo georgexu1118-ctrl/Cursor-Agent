@@ -1,0 +1,11 @@
+# Runtime dependencies (also declared in pyproject.toml)
+pydantic>=2.10
+pydantic-settings>=2.7
+structlog>=24.4
+
+# Development dependencies
+black>=24.10
+mypy>=1.14
+pytest>=8.3
+pytest-mock>=3.14
+ruff>=0.8
