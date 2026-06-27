@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.0] - 2026-06-27
+
+### Added
+
+- Domain value objects: `MessageRole`, `Message`, `SearchResult` (frozen dataclasses).
+- Domain provider protocols: `LLMProvider`, `SearchProvider` (`@runtime_checkable`).
+- `domain/__init__.py` re-exports all public domain types.
+- Unit tests for entity construction, immutability, equality, and protocol conformance.
+
 ## [0.2.0] - 2026-06-26
 
 ### Added

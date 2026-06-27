@@ -27,12 +27,23 @@ Dependencies point inward. The orchestration layer depends only on abstractions 
 | `infrastructure/retry` | Retry policy and exponential backoff utilities |
 | `application/bootstrap` | Application startup and service registration |
 
-## Planned Provider Abstractions
+## Domain Provider Interfaces (Milestone 3)
 
-Future milestones will introduce interchangeable interfaces for:
+| Module | Responsibility |
+|--------|----------------|
+| `domain/entities.py` | `MessageRole`, `Message`, `SearchResult` value objects |
+| `domain/providers.py` | `LLMProvider`, `SearchProvider` runtime-checkable protocols |
 
-- LLM providers
-- Search providers
+All provider protocols use `@runtime_checkable` structural typing. Concrete
+implementations in the infrastructure layer need only satisfy the protocol
+structurally — no inheritance is required.
+
+## Planned Provider Implementations
+
+Future milestones will add concrete infrastructure adapters for:
+
+- LLM providers (Anthropic, OpenAI, …)
+- Search providers (Brave, Tavily, …)
 - Memory providers
 - Embedding providers
 - Storage providers
@@ -43,6 +54,8 @@ Future milestones will introduce interchangeable interfaces for:
 ```
 src/research_agent/
   domain/
+    entities.py        # Message, SearchResult value objects
+    providers.py       # LLMProvider, SearchProvider protocols
   application/
     bootstrap.py
   infrastructure/
@@ -53,6 +66,9 @@ src/research_agent/
   interfaces/
 tests/
   unit/
+    domain/
+    infrastructure/
+    application/
   integration/
 docs/
 examples/

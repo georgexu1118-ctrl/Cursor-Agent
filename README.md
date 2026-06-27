@@ -4,7 +4,7 @@ Production-quality Python framework for building AI research agents with interch
 
 ## Status
 
-**Milestone 2 complete** — core infrastructure (configuration, logging, dependency injection, retry utilities, and bootstrap) is in place. Agent orchestration and provider implementations will be added in later milestones.
+**Milestone 3 complete** — domain provider interfaces (`LLMProvider`, `SearchProvider`) and value objects (`Message`, `SearchResult`) are in place. Concrete provider implementations and agent orchestration will be added in later milestones.
 
 ## Prerequisites
 
