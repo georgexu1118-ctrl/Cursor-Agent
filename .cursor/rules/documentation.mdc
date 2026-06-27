@@ -1,0 +1,38 @@
+---
+description: Documentation standards for README, APIs, and configuration
+globs: "**/*.md,docs/**"
+alwaysApply: false
+---
+
+# Documentation
+
+Keep documentation accurate and synchronized with the codebase.
+
+## README
+
+- Update the README whenever project structure, setup steps, or usage changes.
+- Include: purpose, prerequisites, installation, quick start, and links to detailed docs.
+
+## Architecture
+
+- Document significant architecture decisions in `docs/architecture/` or ADR files.
+- Update architecture docs when layers, interfaces, or provider abstractions change.
+
+## Public APIs
+
+- Every public module, class, and function needs a docstring (Google or NumPy style).
+- Document parameters, return types, raised exceptions, and usage examples for non-obvious APIs.
+
+## Configuration
+
+- Maintain a configuration reference listing all settings, defaults, and valid values.
+- Document every environment variable: name, purpose, required/optional, default, example.
+
+## Examples
+
+- Keep `examples/` scripts runnable and tested in CI where feasible.
+- Update examples when APIs change — stale examples are worse than none.
+
+## Changelog
+
+- Record user-facing changes in `CHANGELOG.md` or release notes for each milestone or release.

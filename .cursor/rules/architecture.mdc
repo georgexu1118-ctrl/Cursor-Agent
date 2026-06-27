@@ -1,0 +1,46 @@
+---
+description: Clean Architecture, modularity, and repository organization standards
+alwaysApply: true
+---
+
+# Architecture
+
+Follow Clean Architecture with clear separation of concerns.
+
+## Layering
+
+- **Domain**: entities, value objects, business rules — no I/O or framework imports.
+- **Application**: use cases and orchestration — depends on domain abstractions only.
+- **Infrastructure**: provider implementations, persistence, HTTP clients — implements domain/application interfaces.
+- **Interfaces**: CLI, API, or entry points — thin adapters that delegate to application layer.
+
+## Dependency Rules
+
+- Depend on abstractions (protocols/ABC), not concrete implementations.
+- High-level modules must not import low-level modules; both depend on interfaces.
+- Define interfaces in the domain or application layer; implement them in infrastructure.
+
+## Design Principles
+
+- **Interface-first**: define contracts before writing implementations.
+- **Modularity**: one responsibility per module; avoid god objects and circular imports.
+- **Extensibility**: prefer composition, registries, and plugin-style registration over conditionals.
+- **Maintainability**: keep modules small; extract when a file mixes concerns.
+
+## Repository Organization
+
+```
+src/<package>/
+  domain/          # entities, interfaces, domain services
+  application/     # use cases, orchestration
+  infrastructure/  # provider implementations, adapters
+  interfaces/      # CLI, API, entry points
+tests/
+  unit/
+  integration/
+docs/
+```
+
+- Keep domain and application free of provider-specific code.
+- Colocate infrastructure adapters with their interface, not with business logic.
+- Add new capabilities by extending interfaces and adding implementations — not by modifying core logic.

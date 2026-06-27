@@ -1,0 +1,48 @@
+---
+description: CI/CD pipeline requirements with GitHub Actions and quality gates
+globs: ".github/**,pyproject.toml,Makefile"
+alwaysApply: false
+---
+
+# GitHub and CI
+
+All changes must pass CI before merging.
+
+## GitHub Actions
+
+- CI runs on every pull request and push to the default branch.
+- Pipeline stages (in order): install → lint → format check → type check → test.
+- Fail fast: stop the pipeline on the first failing stage.
+
+## Tooling
+
+| Tool | Purpose |
+|------|---------|
+| **Ruff** | Linting and import sorting |
+| **Black** | Code formatting |
+| **MyPy** | Static type checking (`strict` or equivalent for src/) |
+| **pytest** | Test execution |
+
+## Configuration
+
+- Pin tool versions in `pyproject.toml` or a constraints file.
+- Ruff config should not conflict with Black (use Ruff's formatter or compatible line length).
+- MyPy should type-check `src/` with tests optionally in a separate config.
+
+## Pull Requests
+
+- CI must be green before merge — no bypassing required checks.
+- Keep PRs small and focused; one milestone or logical change per PR.
+- Include a brief test plan in the PR description.
+
+## Local Parity
+
+Developers should be able to reproduce CI locally:
+
+```bash
+ruff check .
+ruff format --check .
+black --check .
+mypy src/
+pytest
+```

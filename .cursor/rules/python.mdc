@@ -1,0 +1,51 @@
+---
+description: Production Python standards for the research agent framework
+globs: "**/*.py"
+alwaysApply: false
+---
+
+# Python Standards
+
+Target **Python 3.12+**. Use modern syntax (`type`, `|` unions, `match` where it clarifies intent).
+
+## Types and Data
+
+- Complete type hints on all public functions, methods, and module-level variables.
+- Use `@dataclass(frozen=True)` for immutable value objects; `@dataclass` for mutable DTOs.
+- Prefer `Protocol` and ABC for interfaces; avoid untyped `Any` unless unavoidable.
+
+## Configuration and Environment
+
+- Centralize configuration in a dedicated module (e.g., `config.py` or Pydantic settings).
+- Load secrets and environment-specific values from environment variables — never hardcode.
+- Validate config at startup; fail fast with clear error messages.
+
+## Logging and Errors
+
+- Use structured logging (`logging` with consistent key-value context, or `structlog`).
+- Raise domain-specific exceptions; catch at boundaries (CLI, API) and translate to user-facing messages.
+- Never use bare `except:` or silently swallow errors.
+
+## Resilience
+
+- Wrap external calls (LLM, HTTP, storage) with retry logic using exponential backoff.
+- Make retry limits and timeouts configurable.
+
+## Async
+
+- Use `async`/`await` for I/O-bound provider calls when the orchestration layer is async.
+- Do not mix blocking I/O inside async code without `asyncio.to_thread` or an executor.
+
+## State and Naming
+
+- Avoid global mutable state; inject dependencies through constructors or context.
+- **Modules/packages**: `snake_case`
+- **Classes**: `PascalCase`
+- **Functions/variables**: `snake_case`
+- **Constants**: `UPPER_SNAKE_CASE`
+- **Private members**: leading underscore
+
+## Dependencies
+
+- Inject dependencies via constructor parameters or a lightweight DI container — no hidden singletons.
+- Keep third-party imports at infrastructure boundaries, not in domain logic.

@@ -1,0 +1,45 @@
+---
+description: Pytest standards for unit and integration tests
+globs: "tests/**/*.py,**/test_*.py,**/conftest.py"
+alwaysApply: false
+---
+
+# Testing
+
+Use **pytest** as the test runner and assertion library.
+
+## Test Design
+
+- **Unit tests** for domain logic, use cases, and pure functions — no network or filesystem.
+- **Deterministic**: fix seeds, freeze time (`freezegun` or `time-machine`), avoid `sleep`.
+- **Isolated**: each test sets up and tears down its own state; no order dependencies.
+- **Meaningful assertions**: assert behavior and outcomes, not implementation details.
+
+## External Services
+
+- Mock LLM, search, storage, and HTTP clients at infrastructure boundaries.
+- Use `pytest-mock` or `unittest.mock`; prefer fakes over mocks when behavior matters.
+- Do not call live APIs in unit tests.
+
+## Fixtures
+
+- Define shared fixtures in `conftest.py` at the appropriate directory level.
+- Keep fixtures focused; compose small fixtures rather than one mega-fixture.
+- Use `@pytest.fixture` scopes intentionally (`function` by default).
+
+## Organization
+
+```
+tests/
+  unit/           # fast, no I/O
+  integration/    # real adapters, marked separately
+  conftest.py
+```
+
+- Mirror source layout: `tests/unit/application/test_foo.py` for `src/.../application/foo.py`.
+- Mark slow or integration tests with `@pytest.mark.integration` and exclude from default CI if needed.
+
+## Coverage
+
+- Test happy paths, error paths, and boundary conditions for public APIs.
+- Do not write tests that only assert mocks were called without verifying the result.

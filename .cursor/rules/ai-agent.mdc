@@ -1,0 +1,46 @@
+---
+description: AI research agent framework abstractions and provider interchangeability
+alwaysApply: true
+---
+
+# AI Agent Framework
+
+This project is a production-quality Python AI research agent framework. Design for interchangeability and long-term extension.
+
+## Core Principle
+
+The orchestration layer depends **only on interfaces**. Business logic must never import provider-specific SDKs.
+
+## Provider Abstractions
+
+Define protocols/ABCs for each swappable capability:
+
+| Interface | Responsibility |
+|-----------|----------------|
+| `LLMProvider` | Text generation, chat completion, streaming |
+| `SearchProvider` | Web and document search queries |
+| `MemoryProvider` | Short-term and long-term agent memory |
+| `EmbeddingProvider` | Vector embedding generation |
+| `StorageProvider` | Artifact, report, and file persistence |
+| `ReportGenerator` | Structured output formatting (Markdown, PDF, etc.) |
+
+- Register implementations via dependency injection — not `if provider == "openai"` branches in core logic.
+- New providers require a new infrastructure adapter, not changes to use cases.
+
+## Orchestration
+
+- The agent loop (plan → act → observe → reflect) lives in the application layer.
+- Use cases compose providers through injected interfaces.
+- Keep prompts and agent policies in dedicated modules, separate from provider wiring.
+
+## Extensibility
+
+- Favor reusable, composable components over one-off scripts.
+- Support plugin-style registration for tools, providers, and report formats.
+- Design interfaces with the minimum viable surface; extend via optional protocol methods or composition.
+
+## Research Agent Concerns
+
+- Separate **tool definitions** from **tool execution**.
+- Make agent state explicit and serializable for debugging and replay.
+- Log agent decisions with structured context (step, tool, input hash, outcome) — not raw secrets.

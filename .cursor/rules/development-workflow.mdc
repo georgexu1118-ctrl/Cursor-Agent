@@ -1,0 +1,32 @@
+---
+description: Milestone-driven development process and commit discipline
+alwaysApply: true
+---
+
+# Development Workflow
+
+Build incrementally. Never attempt the full framework in a single step.
+
+## Milestone Process
+
+1. **Plan first** — explain the implementation plan before writing code.
+2. **Scope strictly** — implement only the requested milestone.
+3. **Stop when done** — do not start the next milestone unless explicitly asked.
+4. **No placeholders** — avoid stub implementations, `pass`, `TODO`, or fake returns unless the milestone explicitly requires a scaffold.
+
+## Incremental Delivery
+
+- Each milestone should produce working, testable code — not a partial skeleton of the entire system.
+- Prefer the smallest diff that satisfies the milestone.
+- Do not add files, abstractions, or infrastructure for future milestones "while you're here."
+
+## Commits
+
+- Keep commits focused: one logical change per commit.
+- Commit messages describe *why*, not just *what*.
+- Do not bundle unrelated refactors with feature work.
+
+## When Blocked
+
+- Ask before expanding scope or introducing dependencies not required by the current milestone.
+- Do not create application structure, source code, or CI until a milestone explicitly requests it.
