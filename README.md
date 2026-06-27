@@ -4,7 +4,7 @@ Production-quality Python framework for building AI research agents with interch
 
 ## Status
 
-**Milestone 1 complete** — project foundation, tooling, and CI are in place. Agent orchestration and provider implementations will be added in later milestones.
+**Milestone 2 complete** — core infrastructure (configuration, logging, dependency injection, retry utilities, and bootstrap) is in place. Agent orchestration and provider implementations will be added in later milestones.
 
 ## Prerequisites
 
@@ -40,16 +40,17 @@ See [docs/configuration.md](docs/configuration.md) for the full environment vari
 
 ## Quick Start
 
-Load validated settings and configure structured logging:
+Bootstrap the application to load settings, configure structured logging, and initialize the dependency injection container:
 
 ```python
-from research_agent.config import load_settings
-from research_agent.logging_config import configure_logging, get_logger
+from research_agent import bootstrap
+from research_agent.infrastructure.retry import RetryPolicy
 
-settings = load_settings()
-configure_logging(settings.log_level)
+context = bootstrap()
+logger = context.logger
+settings = context.settings
+retry_policy = context.container.resolve(RetryPolicy)
 
-logger = get_logger(__name__)
 logger.info("framework_ready", environment=settings.environment)
 ```
 
@@ -81,12 +82,14 @@ make check
 
 ```
 src/research_agent/
-  domain/           # Entities, interfaces, domain services
-  application/      # Use cases and orchestration
-  infrastructure/   # Provider implementations
-  interfaces/       # CLI, API, entry points
-  config.py         # Centralized configuration
-  logging_config.py # Structured logging setup
+  domain/              # Entities, interfaces, domain services
+  application/         # Bootstrap and use cases
+  infrastructure/
+    config/            # Settings and env loading
+    logging/           # Structured logging setup
+    di/                # Dependency injection container
+    retry/             # Retry policy and utilities
+  interfaces/          # CLI, API, entry points
 tests/
   unit/
   integration/
