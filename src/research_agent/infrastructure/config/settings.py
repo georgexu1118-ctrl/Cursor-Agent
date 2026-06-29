@@ -6,6 +6,13 @@ from pydantic import Field, ValidationInfo, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
+class LLMProviderName(StrEnum):
+    """Supported LLM provider identifiers."""
+
+    MOCK = "mock"
+    OPENAI = "openai"
+
+
 class LogFormat(StrEnum):
     """Supported structured log output formats."""
 
@@ -20,6 +27,9 @@ class Settings(BaseSettings):
         environment: Deployment environment name.
         log_level: Python logging level name.
         log_format: Structured log renderer format.
+        llm_provider: LLM backend to use (``mock`` or ``openai``).
+        openai_api_key: OpenAI secret key (required when ``llm_provider=openai``).
+        openai_model: OpenAI model name used for completions.
         retry_max_attempts: Maximum retry attempts for external calls.
         retry_base_delay_seconds: Initial delay between retries in seconds.
         retry_max_delay_seconds: Upper bound for retry delay in seconds.
@@ -36,6 +46,15 @@ class Settings(BaseSettings):
     environment: str = Field(default="development", alias="ENVIRONMENT")
     log_level: str = Field(default="INFO", alias="LOG_LEVEL")
     log_format: LogFormat = Field(default=LogFormat.CONSOLE, alias="LOG_FORMAT")
+
+    # LLM provider selection and configuration
+    llm_provider: LLMProviderName = Field(
+        default=LLMProviderName.MOCK,
+        alias="LLM_PROVIDER",
+    )
+    openai_api_key: str = Field(default="", alias="OPENAI_API_KEY")
+    openai_model: str = Field(default="gpt-4o-mini", alias="OPENAI_MODEL")
+
     retry_max_attempts: int = Field(default=3, alias="RETRY_MAX_ATTEMPTS", ge=1)
     retry_base_delay_seconds: float = Field(
         default=1.0,
