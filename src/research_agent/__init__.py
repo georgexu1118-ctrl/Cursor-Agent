@@ -5,12 +5,15 @@ from research_agent.application.bootstrap import (
     bootstrap,
     create_container,
 )
+from research_agent.application.research_agent import ResearchAgent, ResearchResult
 
 __all__ = [
     "ApplicationContext",
+    "ResearchAgent",
+    "ResearchResult",
     "__version__",
     "bootstrap",
     "create_container",
 ]
 
-__version__ = "0.2.0"
+__version__ = "0.6.0"

@@ -4,7 +4,7 @@ Production-quality Python framework for building AI research agents with interch
 
 ## Status
 
-**Milestone 3 complete** — domain provider interfaces (`LLMProvider`, `SearchProvider`) and value objects (`Message`, `SearchResult`) are in place. Concrete provider implementations and agent orchestration will be added in later milestones.
+**Milestone 6 complete** — `research-agent` CLI entry point is available. Run `research-agent "your question"` after installation to execute the full query → search → summarise pipeline from the terminal.
 
 ## Prerequisites
 
