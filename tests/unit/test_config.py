@@ -13,6 +13,7 @@ def test_settings_defaults(monkeypatch: pytest.MonkeyPatch) -> None:
     """Default settings use development environment and INFO logging."""
     monkeypatch.delenv("ENVIRONMENT", raising=False)
     monkeypatch.delenv("LOG_LEVEL", raising=False)
+    monkeypatch.delenv("LOG_FORMAT", raising=False)
 
     settings = Settings(_env_file=None)
 
